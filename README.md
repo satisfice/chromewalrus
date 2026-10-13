@@ -360,9 +360,6 @@ JogAmp Java3D 1.7.x and JDK 17 or later.  More detail is in
 5. Choose File->Open and load 'samples\champagne.graph', then continue with
    step 4 of QUICK START.
 
-'samples\collatz.graph' is a generated graph; see 'readme-collatz.md' for
-how it is produced.
-
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 BUILDING AND RUNNING ON MAC OS X
