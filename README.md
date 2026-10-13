@@ -160,6 +160,11 @@ you may still experience instability.
 Mac OS X 10.11.6 users: Oracle's Java might cause problems with Java3D and
 AWT. Using Apple's JDK 1.6.0_65 may prevent these errors.
 
+Windows users (current setup): Sun's Java3D is no longer available.  Walrus
+builds and runs against the maintained JogAmp Java3D 1.7.x (with JOGL 2.6.0)
+and JDK 17 or later (tested with JDK 22).  See BUILDING AND RUNNING ON
+WINDOWS below.
+
 Walrus was developed and tested on a Sun Ultra 60 with an Elite 3D card
 and 512MB of RAM, running Solaris 7, a box graciously donated by Sun.
 
@@ -218,6 +223,9 @@ You can give Walrus a quick try by doing the following:
 
       The file walrus-0.6.3.zip was packaged in the common ZIP format.  You
       can unpack it using a program like WinZip (http://www.winzip.com/).
+
+   (Windows users working from this source tree: skip steps 1 and 2 and
+   follow BUILDING AND RUNNING ON WINDOWS below, then continue at step 3.)
 
 2. From the 'walrus-0.6.3' subdirectory, enter the following at a shell
    or command prompt:
@@ -283,6 +291,10 @@ choosing an item from the menu Display->Prune To Neighborhood or by
 pressing one of the keys '0' to '9'.  Pressing '2', for example, would hide
 all but the descendants that lie within two hops of the root node.
 
+You can also zoom with the mouse wheel: rolling the wheel away from you
+zooms in and rolling it toward you zooms out (at most three steps per
+wheel event).
+
 For examining a graph in greater detail, zooming is helpful.  Choosing
 Display->Zoom In (or pressing the key '.' [the same key as for '>']) will
 cause the display to zoom in toward the node at the center of the display.
@@ -304,7 +316,56 @@ commands and menus not covered here.
 
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-BUILDING AND RUNNING
+BUILDING AND RUNNING ON WINDOWS
+
+This procedure builds Walrus from the source in this directory using
+JogAmp Java3D 1.7.x and JDK 17 or later.  More detail is in
+'readme-windows.md'.
+
+1. Make sure 'javac' and 'java' (JDK 17 or later) are on your PATH.
+
+2. The subdirectory 'lib' must contain:
+
+     * mp.jar, antlrall-mod.jar, libsea.jar from the CAIDA walrus-0.6.3
+       release (the CAIDA download link is dead; the release is available
+       from the Internet Archive).
+     * java3d-core-1.7.2.jar, java3d-utils-1.7.2.jar, vecmath-1.7.2.jar,
+       jogl-all-2.6.0.jar, gluegen-rt-2.6.0.jar, and the two Windows amd64
+       natives jars (jogl-all-2.6.0-natives-windows-amd64.jar and
+       gluegen-rt-2.6.0-natives-windows-amd64.jar), all from Maven Central.
+
+   The 'samples' subdirectory comes from the same release.  The directories
+   'lib', 'build' and 'samples' are downloaded or generated and are not
+   tracked in Git.
+
+3. Build, from this directory:
+
+         powershell -File build-walrus.ps1
+
+   JogAmp renamed the Java3D packages (javax.media.j3d became
+   org.jogamp.java3d, and so on).  The script rewrites the imports in a copy
+   of the source under 'build\src' (the tracked .java files are not
+   modified), applies a multi-monitor fix to the copy of H3Main.java, and
+   compiles into 'build\classes'.
+
+4. Run, from this directory:
+
+         run-walrus.bat
+
+   The batch file starts H3Main with 'lib\*' and 'build\classes' on the
+   classpath, plus --add-opens options that let JOGL reach AWT internals
+   blocked by default in JDK 17 and later.  Any arguments are passed
+   through to H3Main.
+
+5. Choose File->Open and load 'samples\champagne.graph', then continue with
+   step 4 of QUICK START.
+
+'samples\collatz.graph' is a generated graph; see 'readme-collatz.md' for
+how it is produced.
+
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+BUILDING AND RUNNING ON MAC OS X
 
 The following process is for Mac OS X 10.11.6 users:
 
