@@ -146,6 +146,10 @@ public class H3Main
 
 		    m_closeMenuItem.setEnabled(true);
 		    m_startMenuItem.setEnabled(true);
+
+		    // Render immediately, as if the user had chosen
+		    // Rendering->Start with the default settings.
+		    handleStartRenderingRequest();
 		}
 	    }
 	    catch (FileNotFoundException e)
