@@ -209,12 +209,13 @@ Display
       --- Zooms toward the node at the center of the display.  Each time
           this menu is selected the magnification of the display increases
           by 25%.  Pressing the '.' key (the same key as for '>') has the
-          same effect.
+          same effect.  So does rolling the mouse wheel away from you.
    Zoom Out
       --- Zooms away from the node at the center of the display.  Each time
           this menu is selected the magnification of the display decreases
           to the previous step.  Pressing the ',' key (the same key as for
-          '<') has the same effect.
+          '<') has the same effect.  So does rolling the mouse wheel toward
+          you.
    Zoom 1:1
       --- Resets the display to normal magnification.  Pressing the '/'
           key has the same effect.

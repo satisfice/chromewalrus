@@ -2183,7 +2183,8 @@ public class H3Main
     //       only the AWT thread should access this class.
 
     private static class EventHandler
-	implements KeyListener, MouseListener, MouseMotionListener
+	implements KeyListener, MouseListener, MouseMotionListener,
+		   MouseWheelListener
     {
 	public EventHandler
 	    (H3ViewParameters parameters,
@@ -2200,6 +2201,7 @@ public class H3Main
 	    m_canvas.addKeyListener(this);
 	    m_canvas.addMouseListener(this);
 	    m_canvas.addMouseMotionListener(this);
+	    m_canvas.addMouseWheelListener(this);
 
 	    m_renderLoop = renderLoop;
 	    m_narrowingHandler = narrowingHandler;
@@ -2236,6 +2238,7 @@ public class H3Main
 	    m_canvas.removeKeyListener(this);
 	    m_canvas.removeMouseListener(this);
 	    m_canvas.removeMouseMotionListener(this);
+	    m_canvas.removeMouseWheelListener(this);
 
 	    if (m_automaticRefresh)
 	    {
@@ -2794,6 +2797,29 @@ public class H3Main
 
 	public void keyPressed(KeyEvent e) {}
 	public void keyReleased(KeyEvent e) {}
+
+	// Mouse wheel zoom: rolling the wheel away from the user (a negative
+	// rotation) zooms in, rolling it toward the user zooms out.  One step
+	// is applied per notch, limited to MAX_WHEEL_STEPS per event so that a
+	// fast spin does not queue many slow display refreshes.
+	public void mouseWheelMoved(MouseWheelEvent e)
+	{
+	    int rotation = e.getWheelRotation();
+	    int steps = Math.min(Math.abs(rotation), MAX_WHEEL_STEPS);
+	    for (int i = 0; i < steps; i++)
+	    {
+		if (rotation < 0)
+		{
+		    increaseMagnification();
+		}
+		else
+		{
+		    decreaseMagnification();
+		}
+	    }
+	}
+
+	private static final int MAX_WHEEL_STEPS = 3;
 
 	// Supported key events:
 	//
