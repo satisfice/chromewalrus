@@ -2090,7 +2090,7 @@ public class H3Main
     private static final boolean DEBUG_CHECK_ID_MAPPINGS = false;
     private static final boolean DEBUG_EVENT_HANDLING = false;
 
-    private static final int DEFAULT_FRAME_WIDTH = 900;
+    private static final int DEFAULT_FRAME_WIDTH = 1800;
     private static final int DEFAULT_FRAME_HEIGHT = 1000;
 
     private static final String WALRUS_TITLE = "Walrus 0.6.3";
